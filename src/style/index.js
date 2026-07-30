@@ -1,0 +1,8 @@
+import './reset.css'
+import './variables.css'
+import './fonts.css'
+import './global.css'
+import './header.css'
+import './main.css'
+import './footer.css'
+import './dark.css'
