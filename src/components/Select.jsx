@@ -1,8 +1,9 @@
 const Select = (props) => {
+  const { onChangeCity,  sborDannix } = props
   const cityData = [
     {
       name: "Москва",
-      value: "rostovNaDonu",
+      value: "moscow",
     },
     {
       name: "Ростов-на-Дону",
@@ -15,7 +16,13 @@ const Select = (props) => {
   ]
   return (
     <>
-      <select className="select" form="weather__form" name="location">
+      <select
+        className="select"
+        form="weather__form"
+        name="location"
+        onChange={(event) => onChangeCity(event.target.value)}
+        value={sborDannix}
+      >
         {cityData.map((element, index) => {
           return (
             <option value={element.value} key={index}>

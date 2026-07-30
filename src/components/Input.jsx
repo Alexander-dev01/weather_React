@@ -1,14 +1,14 @@
 const Input = (props) => {
-  const {value,type,name}=props
+  const { value, type, name, onChangeDate,sborDannix } = props
   return (
     <>
       <input
         className="radio "
         type={type}
         name={name}
-        value={value}
+        value={sborDannix}
         id={value}
-        readOnly
+        onChange={(event) => onChangeDate(value)}
       />
     </>
   )

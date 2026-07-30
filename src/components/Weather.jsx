@@ -1,7 +1,11 @@
-import Form from "./form"
+import Button from "./Button"
+import Form from "./Form"
 import HeaderFooter from "./HeaderFooter"
+import OutputImg from "./OutputImg"
+
 
 const Weather = () => {
+  const weatherImg = "empty.png"
   return (
     <>
       <header className="header">
@@ -13,30 +17,17 @@ const Weather = () => {
       <main className="main">
         <div className="container">
           <div className="main-inner">
-           <Form/>
+            <Form />
 
             <div className="weather__img light">
-              <img
-                data-js-image
-                src="src/images/weather/empty.png"
-                alt=""
-                className="weather__img-img"
-              />
+              <OutputImg weatherImg={weatherImg} />
             </div>
           </div>
 
           <div className="main__start-button light">
-            <button
-              className="button"
-              type="submit"
-              form="weather__form"
-              data-js-submit
-            >
-              <span className="button__icon">
-                <img className="icon" src="src/images/start.png" alt="start" />
-              </span>
-              <span>Узнать погоду!</span>
-            </button>
+            <Button src={"start.png"} type={"submit"} form={"weather__form"}>
+              Узнать погоду!
+            </Button>
           </div>
         </div>
       </main>
