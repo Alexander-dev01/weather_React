@@ -1,0 +1,118 @@
+body {
+  min-height: 100vh;
+  background-image: linear-gradient(blue, rgb(0, 238, 255));
+  background-attachment: fixed;
+  font-size: 24px;
+  color: var(--color-text);
+
+  font-family: 'Lato-Regular', sans-serif;
+}
+
+.light {
+  background-color: var(--color-bg1);
+}
+
+.beauty {
+  transform: scale(0.8);
+}
+
+
+.container {
+  max-width: 80vw;
+  margin: 0px auto;
+  background-color: var(--background-color-container);
+  border-radius: var(--border-radius);
+}
+
+.button,
+.select,
+.radio__text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+  min-width: 0;
+
+  color: var(--color-text);
+  border: var(--border-button);
+  border-radius: var(--border-radius);
+  background-image: var(--linear-gradient);
+
+  transition-duration: var(--transition-duration);
+  padding: var(--padding-button);
+}
+
+.button:hover {
+  transform: scale(1.03);
+}
+
+.select:hover {
+  box-shadow: var(--shadow);
+}
+
+.button:active {
+  transform: scale(1.03);
+  background: var(--linear-gradient-active);
+}
+
+.button:hover .icon {
+  transform: scale(1.2);
+
+}
+
+
+.button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: var(--border-radius-image);
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+
+  object-fit: cover;
+  border-radius: var(--border-radius-image);
+  transition-duration: var(--transition-duration);
+}
+
+.select {
+  background-image: url('../images/mestopolozenie.png');
+  background-color: var(--color-bg2);
+  background-repeat: no-repeat;
+  background-size: 30px 30px;
+  background-position: 5px;
+  padding-left: 40px;
+}
+
+select option {
+  background-color: var(--color-bg2);
+}
+
+.radio {
+  display: none;
+}
+
+.radio__text {
+  display: flex;
+  margin: var(--margin-text-div);
+  justify-content: space-around;
+}
+
+.radio:checked+.radio__text {
+  box-shadow: var(--shadow);
+  transform: scale(1.03);
+
+}
+
+@media(max-width:1200px) {
+  body {
+    font-size: 18px;
+  }
+
+}
