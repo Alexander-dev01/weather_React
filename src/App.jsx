@@ -1,4 +1,4 @@
-import Weather from "./fonts/components/Weather"
+import Weather from "./components/Weather"
 
 const App = () => {
   return (
