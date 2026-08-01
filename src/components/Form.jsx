@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { memo, useContext } from "react"
 import { WeatherContext } from "../context/WeatherContext"
 import Input from "./Input"
 import Label from "./Label"
@@ -42,4 +42,4 @@ const Form = (props) => {
     </>
   )
 }
-export default Form
+export default memo(Form)

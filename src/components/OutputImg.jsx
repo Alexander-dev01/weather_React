@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 const OutputImg = (props) => {
   const { img, animBeauty } = props
   return (
@@ -11,4 +13,4 @@ const OutputImg = (props) => {
     </>
   )
 }
-export default OutputImg
+export default memo(OutputImg)

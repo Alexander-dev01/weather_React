@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 const Input = (props) => {
   const { value, type, name, setSborDannix, sborDannix } = props
   return (
@@ -16,4 +18,4 @@ const Input = (props) => {
     </>
   )
 }
-export default Input
+export default memo(Input)

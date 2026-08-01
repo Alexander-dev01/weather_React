@@ -1,5 +1,81 @@
-import { createContext, useRef } from "react"
+import { createContext, useCallback, useMemo, useRef } from "react"
 import { useEffect, useState } from "react"
+
+const citiesCoordinates = {
+  moscow: {
+    latitude: 55.7558,
+    longitude: 37.6173,
+    timezone: "Europe%2FMoscow",
+  },
+  saintPetersburg: {
+    latitude: 59.9343,
+    longitude: 30.3351,
+    timezone: "Europe%2FMoscow",
+  },
+  rostovNaDonu: {
+    latitude: 47.2357,
+    longitude: 39.7015,
+    timezone: "Europe%2FMoscow",
+  },
+}
+
+const weatherCodes = {
+  0: "Ясно",
+  1: "Почти ясно",
+  2: "Переменная облачность",
+  3: "Пасмурно",
+  45: "Туман",
+  48: "Инейный туман",
+  51: "Лёгкая морось",
+  53: "Морось",
+  55: "Сильная морось",
+  61: "Слабый дождь",
+  63: "Дождь",
+  65: "Сильный дождь",
+  66: "Ледяной дождь слабый",
+  67: "Ледяной дождь ",
+  71: "Слабый снег",
+  73: "Снег",
+  75: "Сильный снег",
+  77: "Снег",
+  80: "Слабый ливень",
+  81: "Умеренный ливень",
+  82: "Сильный ливень",
+  85: "Слабый снегопад",
+  86: "Сильный снегопад",
+  95: "Гроза",
+  96: "Гроза с градом",
+  99: "Сильная гроза с градом",
+}
+
+const weatherImages = {
+  0: "solnecno.png",
+  1: "solnecno.png",
+  2: "pasmurno.png",
+  3: "pasmurno.png",
+  45: "tuman.png",
+  48: "tuman.png",
+  51: "dojd.png",
+  53: "dojd.png",
+  55: "dojd.png",
+  61: "dojd.png",
+  63: "dojd.png",
+  65: "dojd.png",
+  66: "dozdSneg.png",
+  67: "dozdSneg.png",
+  71: "sneg.png",
+  73: "sneg.png",
+  75: "sneg.png",
+  77: "sneg.png",
+  80: "dojd.png",
+  81: "dojd.png",
+  82: "dojd.png",
+  85: "sneg.png",
+  86: "sneg.png",
+  95: "groza.png",
+  96: "groza.png",
+  99: "groza.png",
+}
 
 export const WeatherContext = createContext(null)
 
@@ -32,82 +108,6 @@ export const Logic = (props) => {
     nameWeather: "",
     temperature: 'Жми "Узнать погоду!"',
   })
-
-  const citiesCoordinates = {
-    moscow: {
-      latitude: 55.7558,
-      longitude: 37.6173,
-      timezone: "Europe%2FMoscow",
-    },
-    saintPetersburg: {
-      latitude: 59.9343,
-      longitude: 30.3351,
-      timezone: "Europe%2FMoscow",
-    },
-    rostovNaDonu: {
-      latitude: 47.2357,
-      longitude: 39.7015,
-      timezone: "Europe%2FMoscow",
-    },
-  }
-
-  const weatherCodes = {
-    0: "Ясно",
-    1: "Почти ясно",
-    2: "Переменная облачность",
-    3: "Пасмурно",
-    45: "Туман",
-    48: "Инейный туман",
-    51: "Лёгкая морось",
-    53: "Морось",
-    55: "Сильная морось",
-    61: "Слабый дождь",
-    63: "Дождь",
-    65: "Сильный дождь",
-    66: "Ледяной дождь слабый",
-    67: "Ледяной дождь ",
-    71: "Слабый снег",
-    73: "Снег",
-    75: "Сильный снег",
-    77: "Снег",
-    80: "Слабый ливень",
-    81: "Умеренный ливень",
-    82: "Сильный ливень",
-    85: "Слабый снегопад",
-    86: "Сильный снегопад",
-    95: "Гроза",
-    96: "Гроза с градом",
-    99: "Сильная гроза с градом",
-  }
-
-  const weatherImages = {
-    0: "solnecno.png",
-    1: "solnecno.png",
-    2: "pasmurno.png",
-    3: "pasmurno.png",
-    45: "tuman.png",
-    48: "tuman.png",
-    51: "dojd.png",
-    53: "dojd.png",
-    55: "dojd.png",
-    61: "dojd.png",
-    63: "dojd.png",
-    65: "dojd.png",
-    66: "dozdSneg.png",
-    67: "dozdSneg.png",
-    71: "sneg.png",
-    73: "sneg.png",
-    75: "sneg.png",
-    77: "sneg.png",
-    80: "dojd.png",
-    81: "dojd.png",
-    82: "dojd.png",
-    85: "sneg.png",
-    86: "sneg.png",
-    95: "groza.png",
-    96: "groza.png",
-    99: "groza.png",
-  }
 
   useEffect(() => {
     console.log("======================================")
@@ -152,9 +152,11 @@ export const Logic = (props) => {
       animBeauty.current.classList.toggle("beauty")
       // console.log("animBeauty.current", animBeauty.current)
     }, 200)
-  },[namePostFetch])
+  }, [namePostFetch])
 
-  const gluing = () => {
+
+  
+  const gluing = useCallback(() => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
     const tomorrowDate = tomorrow.toISOString().slice(0, 10)
@@ -166,7 +168,7 @@ export const Logic = (props) => {
       latitude: cityCoords.latitude,
       tomorrowDate: tomorrowDate,
     })
-  }
+  }, [sborDannix.locationValue])
 
   const sending = () => {
     const urlStart = "https://api.open-meteo.com/v1/forecast?"
@@ -221,13 +223,16 @@ export const Logic = (props) => {
       })
   }
 
-  const value = {
-    sborDannix,
-    setSborDannix,
-    gluing,
-    namePostFetch,
-    animBeauty,
-  }
+  const value = useMemo(
+    () => ({
+      sborDannix,
+      setSborDannix,
+      gluing,
+      namePostFetch,
+      animBeauty,
+    }),
+    [sborDannix, setSborDannix, gluing, namePostFetch, animBeauty],
+  )
 
   return (
     <WeatherContext.Provider value={value}>{children}</WeatherContext.Provider>

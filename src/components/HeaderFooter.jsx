@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { memo, useContext } from "react"
 import Button from "./Button"
 import Logo from "./Logo"
 import Select from "./Select"
@@ -27,4 +27,4 @@ const HeaderFooter = (props) => {
     </>
   )
 }
-export default HeaderFooter
+export default memo(HeaderFooter)

@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { memo, useRef } from "react"
 
 const Select = (props) => {
   const { setSborDannix, sborDannix } = props
@@ -17,9 +17,6 @@ const Select = (props) => {
     },
   ]
 
-
-  
-
   return (
     <>
       <select
@@ -36,7 +33,7 @@ const Select = (props) => {
       >
         {cityData.map((element, index) => {
           return (
-            <option value={element.value} key={index}>
+            <option value={element.value} key={element.value}>
               г. {element.name}
             </option>
           )
@@ -45,4 +42,4 @@ const Select = (props) => {
     </>
   )
 }
-export default Select
+export default memo(Select)

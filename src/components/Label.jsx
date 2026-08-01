@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 const Label = (props) => {
   const { htmlFor, children } = props
   return (
@@ -9,4 +11,4 @@ const Label = (props) => {
     </>
   )
 }
-export default Label
+export default memo(Label)

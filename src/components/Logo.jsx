@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 const Logo = (props) => {
   const { logo, alt } = props
   return (
@@ -11,4 +13,4 @@ const Logo = (props) => {
     </>
   )
 }
-export default Logo
+export default memo(Logo)
