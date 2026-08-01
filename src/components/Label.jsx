@@ -5,7 +5,7 @@ const Label = (props) => {
   return (
     <>
       <label className="radio__text" htmlFor={htmlFor}>
-        <img className="icon" src="src/images/data.png" alt="date" />
+        <img className="icon" src="images/data.png" alt="date" />
         {children}
       </label>
     </>

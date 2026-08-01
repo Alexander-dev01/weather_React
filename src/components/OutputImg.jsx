@@ -5,7 +5,7 @@ const OutputImg = (props) => {
   return (
     <>
       <img
-        src={`src/images/weather/${img}`}
+        src={`images/weather/${img}`}
         alt={img}
         ref={animBeauty}
         className="weather__img-img"

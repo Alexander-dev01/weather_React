@@ -13,7 +13,7 @@ const Button = (props) => {
           onClick()
         }}
       >
-        <img className="icon" src={`src/images/${src}`} alt="start" />
+        <img className="icon" src={`images/${src}`} alt="start" />
         {children && <span>{children}</span>}
       </button>
     </>

@@ -6,7 +6,7 @@ const Logo = (props) => {
     <>
       <div className="logo">
         <div className="logo__img">
-          <img src={`src/images/${logo}`} alt={alt} />
+          <img src={`images/${logo}`} alt={alt} />
         </div>
         <span className="logo__text">Погода</span>
       </div>
