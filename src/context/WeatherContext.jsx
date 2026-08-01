@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext, useRef } from "react"
 import { useEffect, useState } from "react"
 
 export const WeatherContext = createContext(null)
@@ -143,6 +143,17 @@ export const Logic = (props) => {
     }
   }, [currentWeatherFetch])
 
+  // красивая анимация
+  const animBeauty = useRef(null)
+  useEffect(() => {
+    animBeauty.current.classList.toggle("beauty")
+    // console.log("animBeauty.current", animBeauty.current)
+    setTimeout(() => {
+      animBeauty.current.classList.toggle("beauty")
+      // console.log("animBeauty.current", animBeauty.current)
+    }, 200)
+  },[namePostFetch])
+
   const gluing = () => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
@@ -215,6 +226,7 @@ export const Logic = (props) => {
     setSborDannix,
     gluing,
     namePostFetch,
+    animBeauty,
   }
 
   return (

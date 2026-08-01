@@ -3,10 +3,12 @@ import Button from "./Button"
 import Logo from "./Logo"
 import Select from "./Select"
 import { WeatherContext } from "../context/WeatherContext"
+import UseTheme from "../hooks/UseTheme"
 
 const HeaderFooter = (props) => {
   const { hasLogo, hasSelect, hasFooter } = props
   const { setSborDannix, sborDannix } = useContext(WeatherContext)
+  const { onClickTheme } = UseTheme()
 
   return (
     <>
@@ -15,7 +17,7 @@ const HeaderFooter = (props) => {
 
         {hasSelect && (
           <div className="header_right">
-            <Button src="theme.png" />
+            <Button src="theme.png" onClick={onClickTheme} />
             <Select setSborDannix={setSborDannix} sborDannix={sborDannix} />
           </div>
         )}
