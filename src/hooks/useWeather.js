@@ -97,38 +97,91 @@ const useWeather = () => {
   }
 
   useEffect(() => {
+    console.log('======================================');
     console.log('sborDannix', sborDannix);
+    console.log('упакованный для отправки currentLatitudeLongitudeTimezone', currentLatitudeLongitudeTimezone);
 
-  }, [sborDannix])
+    console.log('======================================');
 
-  // НАПОМИНАНИЕ ПЕРЕПИШИ ЧТОБЫ ЧЕРЕЗ SET СРАЗУ ХЕРАЧИЛО А НЕ ПСЕВДОМЕТОДЫ
-  const onChangeDate = (value) => {
-    setSborDannix((prev) => ({ ...prev, dateValue: value }))
+  }, [sborDannix, currentLatitudeLongitudeTimezone])
+
+  useEffect(() => {
+    if (currentLatitudeLongitudeTimezone.latitude &&
+      currentLatitudeLongitudeTimezone.longitude) {
+      sending()
+    }
+  }, [currentLatitudeLongitudeTimezone])
+
+
+  useEffect(() => {
+    if (currentWeatherFetch.dataWeatherCod) {
+      console.log('данные от сервера (уже в моем объекте)', currentWeatherFetch);
+
+    }
+  }, [currentWeatherFetch])
+
+  const gluing = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowDate = tomorrow.toISOString().slice(0, 10);
+    const cityCoords = citiesCoordinates[sborDannix.locationValue]
+
+    setCurrentLatitudeLongitudeTimezone({
+      timezone: cityCoords.timezone,
+      longitude: cityCoords.longitude,
+      latitude: cityCoords.latitude,
+      tomorrowDate: tomorrowDate,
+    })
   }
-  const onChangeCity = (value) => {
-    setSborDannix((prev) => ({ ...prev, locationValue: value }))
+
+  const sending = () => {
+    const urlStart = 'https://api.open-meteo.com/v1/forecast?'
+    let urlEnd = ''
+    if (sborDannix.dateValue == 'segodnya') {
+      urlEnd = `latitude=${currentLatitudeLongitudeTimezone.latitude}&longitude=${currentLatitudeLongitudeTimezone.longitude}&current=temperature_2m,weather_code&timezone=${currentLatitudeLongitudeTimezone.timezone}`
+    }
+    else {
+      urlEnd = `latitude=${currentLatitudeLongitudeTimezone.latitude}&longitude=${currentLatitudeLongitudeTimezone.longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=${currentLatitudeLongitudeTimezone.timezone}`
+    }
+
+    fetch(`${urlStart}${urlEnd}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.status === 400
+            ? `ошибка ${response.status} - пинайте фронтендера`
+            : `ошибка ${response.status}`)
+        }
+        return response.json()
+      })
+      .then((json) => {
+        console.log('json', json);
+
+        if (sborDannix.dateValue == 'segodnya') {
+          const temperatureRound = Math.round(json.current.temperature_2m)
+          setCurrentWeatherFetch({
+            dataTemperature: temperatureRound,
+            dataTime: json.current.time,
+            dataWeatherCod: json.current.weather_code,
+          })
+        }
+        else {
+          const index = json.daily.time.findIndex((element) => element === currentLatitudeLongitudeTimezone.tomorrowDate)
+          let srTemperature = (json.daily.temperature_2m_max[index] + json.daily.temperature_2m_min[index]) / 2
+          srTemperature = Math.round(srTemperature)
+          setCurrentWeatherFetch({
+            dataTemperature: srTemperature,
+            dataTime: json.daily.time[index],
+            dataWeatherCod: json.daily.weather_code[index],
+          })
+        }
+      })
+      .catch((error) => {
+        // elementTemperature.textContent = error.message
+        console.log(error.message);
+      })
   }
 
-  // gluing() {
-  //   const tomorrow = new Date();
-  //   tomorrow.setDate(tomorrow.getDate() + 1);
-  //   const tomorrowDate = tomorrow.toISOString().slice(0, 10);
-  //   this.currentLatitudeLongitudeTimezone.tomorrowDate = tomorrowDate
-
-
-  //   const allLocationArray = Object.entries(this.citiesCoordinates)
-  //   allLocationArray.forEach(element => {
-  //     if (element[0] === this.notClearWheatherCity.locationValue) {
-  //       this.currentLatitudeLongitudeTimezone = {
-  //         ...this.currentLatitudeLongitudeTimezone,
-  //         ...element[1],
-  //       }
-  //       console.log('упакованный для отправки this.currentLatitudeLongitudeTimezone', this.currentLatitudeLongitudeTimezone);
-  //     }
-  //   });
-  // }
-
-  return { onChangeCity, onChangeDate, sborDannix }
+  return { sborDannix, setSborDannix, gluing }
 }
 
 export default useWeather

@@ -1,11 +1,11 @@
 const OutputImg = (props) => {
-  const { weatherImg } = props
+  const { img } = props
   return (
     <>
       <img
         data-js-image
-        src={`src/images/weather/${weatherImg}`}
-        alt={weatherImg}
+        src={`src/images/weather/${img}`}
+        alt={img}
         className="weather__img-img"
       />
     </>

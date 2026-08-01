@@ -1,9 +1,13 @@
 import Weather from "./components/Weather"
+import {Logic} from "./context/WeatherContext"
+
 
 const App = () => {
   return (
     <>
-     <Weather/>
+      <Logic>
+        <Weather />
+      </Logic>
     </>
   )
 }

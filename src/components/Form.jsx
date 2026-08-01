@@ -1,11 +1,12 @@
-import useWeather from "../hooks/useWeather.js"
+import { useContext } from "react"
+import { WeatherContext } from "../context/WeatherContext"
 import Input from "./Input"
 import Label from "./Label"
 
 const Form = (props) => {
-  const { onChangeDate, sborDannix } = useWeather()
+  const { setSborDannix, sborDannix } = useContext(WeatherContext)
+  const { temperature, nameWeather } = props
 
-  const temperature = 'Жми "Узнать погоду!"'
   const name = ""
 
   return (
@@ -16,7 +17,7 @@ const Form = (props) => {
             value={"segodnya"}
             type={"radio"}
             name={"date"}
-            onChangeDate={onChangeDate}
+            setSborDannix={setSborDannix}
             sborDannix={sborDannix}
           />
           <Label htmlFor={"segodnya"}>Сегодня</Label>
@@ -25,7 +26,7 @@ const Form = (props) => {
             value={"zawtra"}
             type={"radio"}
             name={"date"}
-            onChangeDate={onChangeDate}
+            setSborDannix={setSborDannix}
             sborDannix={sborDannix}
           />
           <Label htmlFor={"zawtra"}>Завтра</Label>
@@ -35,7 +36,7 @@ const Form = (props) => {
           <div className="description__t">
             <span data-js-temperature>{temperature}</span>
           </div>
-          <div className="description__name">{name}</div>
+          <div className="description__name">{nameWeather}</div>
         </div>
       </form>
     </>

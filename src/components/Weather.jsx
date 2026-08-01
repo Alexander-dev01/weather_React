@@ -2,10 +2,12 @@ import Button from "./Button"
 import Form from "./Form"
 import HeaderFooter from "./HeaderFooter"
 import OutputImg from "./OutputImg"
-
+import { WeatherContext } from "../context/WeatherContext"
+import { useContext } from "react"
 
 const Weather = () => {
-  const weatherImg = "empty.png"
+  const { gluing, namePostFetch } = useContext(WeatherContext)
+  const { temperature, nameWeather, img } = namePostFetch
   return (
     <>
       <header className="header">
@@ -17,15 +19,20 @@ const Weather = () => {
       <main className="main">
         <div className="container">
           <div className="main-inner">
-            <Form />
+            <Form temperature={temperature} nameWeather={nameWeather} />
 
             <div className="weather__img light">
-              <OutputImg weatherImg={weatherImg} />
+              <OutputImg img={img} />
             </div>
           </div>
 
           <div className="main__start-button light">
-            <Button src={"start.png"} type={"submit"} form={"weather__form"}>
+            <Button
+              src={"start.png"}
+              type={"submit"}
+              form={"weather__form"}
+              gluing={gluing}
+            >
               Узнать погоду!
             </Button>
           </div>

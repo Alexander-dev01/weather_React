@@ -1,5 +1,7 @@
+import { useRef } from "react"
+
 const Select = (props) => {
-  const { onChangeCity,  sborDannix } = props
+  const { setSborDannix, sborDannix } = props
   const cityData = [
     {
       name: "Москва",
@@ -14,14 +16,23 @@ const Select = (props) => {
       value: "saintPetersburg",
     },
   ]
+
+
+  
+
   return (
     <>
       <select
         className="select"
         form="weather__form"
         name="location"
-        onChange={(event) => onChangeCity(event.target.value)}
-        value={sborDannix}
+        onChange={(event) =>
+          setSborDannix((prev) => ({
+            ...prev,
+            locationValue: event.target.value,
+          }))
+        }
+        value={sborDannix.locationValue}
       >
         {cityData.map((element, index) => {
           return (

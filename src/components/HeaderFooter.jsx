@@ -1,11 +1,12 @@
-import useWeather from "../hooks/useWeather.js"
+import { useContext } from "react"
 import Button from "./Button"
 import Logo from "./Logo"
 import Select from "./Select"
+import { WeatherContext } from "../context/WeatherContext"
 
 const HeaderFooter = (props) => {
   const { hasLogo, hasSelect, hasFooter } = props
-  const { onChangeCity, sborDannix } = useWeather()
+  const { setSborDannix, sborDannix } = useContext(WeatherContext)
 
   return (
     <>
@@ -15,7 +16,7 @@ const HeaderFooter = (props) => {
         {hasSelect && (
           <div className="header_right">
             <Button src="theme.png" />
-            <Select onChangeCity={onChangeCity} sborDannix={sborDannix} />
+            <Select setSborDannix={setSborDannix} sborDannix={sborDannix} />
           </div>
         )}
 
