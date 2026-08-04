@@ -29,6 +29,8 @@ const weatherCodes = {
   51: "Лёгкая морось",
   53: "Морось",
   55: "Сильная морось",
+  56: "Ледяная заморозь слабая",
+  57: "Ледяная заморозь слабая",
   61: "Слабый дождь",
   63: "Дождь",
   65: "Сильный дождь",
@@ -58,6 +60,8 @@ const weatherImages = {
   51: "dojd.png",
   53: "dojd.png",
   55: "dojd.png",
+  56: "dozdSneg.png",
+  57: "dozdSneg.png",
   61: "dojd.png",
   63: "dojd.png",
   65: "dojd.png",
@@ -154,8 +158,6 @@ export const Logic = (props) => {
     }, 200)
   }, [namePostFetch])
 
-
-  
   const gluing = useCallback(() => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
