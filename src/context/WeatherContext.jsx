@@ -86,11 +86,13 @@ export const WeatherContext = createContext(null)
 export const Logic = (props) => {
   const { children } = props
 
+  // меняется через интерфейс и считывается в gluing
   const [sborDannix, setSborDannix] = useState({
-    locationValue: "moscow", //записан после сбора данных (moscow)
-    dateValue: "segodnya", //записан после сбора данных (segodnya)
+    locationValue: "moscow",
+    dateValue: "segodnya",
   })
 
+  // меняется в gluing и считывается в sending
   const [
     currentLatitudeLongitudeTimezone,
     setCurrentLatitudeLongitudeTimezone,
@@ -101,6 +103,7 @@ export const Logic = (props) => {
     tomorrowDate: null, // (22-22-2026)+1
   })
 
+  //  меняется в fetch(sending) и считывается в useEffect (отправка на рендеринг)
   const [currentWeatherFetch, setCurrentWeatherFetch] = useState({
     dataTemperature: "", //35
     dataTime: "", //22.22.22Ф21:10
@@ -113,28 +116,30 @@ export const Logic = (props) => {
     temperature: 'Жми "Узнать погоду!"',
   })
 
-  useEffect(() => {
-    console.log("======================================")
-    console.log("sborDannix", sborDannix)
-    console.log(
-      "упакованный для отправки currentLatitudeLongitudeTimezone",
-      currentLatitudeLongitudeTimezone,
-    )
+  // ========================================================================================================================================================================================
 
-    console.log("======================================")
-  }, [sborDannix, currentLatitudeLongitudeTimezone])
-
+  // отправка данных если они есть
   useEffect(() => {
     if (
       currentLatitudeLongitudeTimezone.latitude &&
       currentLatitudeLongitudeTimezone.longitude
     ) {
+      console.log(
+        "currentLatitudeLongitudeTimezone",
+        currentLatitudeLongitudeTimezone,
+      )
+
       sending()
     }
   }, [currentLatitudeLongitudeTimezone])
 
+  // отправляю на рендеринг
   useEffect(() => {
-    if (currentWeatherFetch.dataWeatherCod) {
+    if (
+      currentWeatherFetch.dataWeatherCod !== null &&
+      currentWeatherFetch.dataWeatherCod !== undefined &&
+      currentWeatherFetch.dataWeatherCod !== ""
+    ) {
       console.log("данные от сервера (уже в моем объекте)", currentWeatherFetch)
       const codeWeather = currentWeatherFetch.dataWeatherCod
       const newWeatherGut = {
@@ -151,13 +156,12 @@ export const Logic = (props) => {
   const animBeauty = useRef(null)
   useEffect(() => {
     animBeauty.current.classList.toggle("beauty")
-    // console.log("animBeauty.current", animBeauty.current)
     setTimeout(() => {
       animBeauty.current.classList.toggle("beauty")
-      // console.log("animBeauty.current", animBeauty.current)
     }, 200)
   }, [namePostFetch])
 
+  // вызывется кнопкой
   const gluing = useCallback(() => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
@@ -172,6 +176,7 @@ export const Logic = (props) => {
     })
   }, [sborDannix.locationValue])
 
+  // вызывается useEffect`ом от наполненной ширины&долготы
   const sending = () => {
     const urlStart = "https://api.open-meteo.com/v1/forecast?"
     let urlEnd = ""
@@ -222,6 +227,7 @@ export const Logic = (props) => {
       .catch((error) => {
         // elementTemperature.textContent = error.message
         console.log(error.message)
+        setNamePostFetch((prev) => ({ ...prev, temperature: error.message }))
       })
   }
 
