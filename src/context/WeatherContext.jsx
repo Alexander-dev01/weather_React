@@ -203,7 +203,7 @@ export const Logic = (props) => {
         if (sborDannix.dateValue == "segodnya") {
           const temperatureRound = Math.round(json.current.temperature_2m)
           setCurrentWeatherFetch({
-            dataTemperature: temperatureRound,
+            dataTemperature: temperatureRound + "°",
             dataTime: json.current.time,
             dataWeatherCod: json.current.weather_code,
           })
@@ -218,7 +218,7 @@ export const Logic = (props) => {
             2
           srTemperature = Math.round(srTemperature)
           setCurrentWeatherFetch({
-            dataTemperature: srTemperature,
+            dataTemperature: srTemperature + "°",
             dataTime: json.daily.time[index],
             dataWeatherCod: json.daily.weather_code[index],
           })

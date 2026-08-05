@@ -34,7 +34,7 @@ const Form = (props) => {
 
         <div className="description__content light">
           <div className="description__t">
-            <span data-js-temperature>{temperature}°</span>
+            <span data-js-temperature>{temperature}</span>
           </div>
           <div className="description__name">{nameWeather}</div>
         </div>
