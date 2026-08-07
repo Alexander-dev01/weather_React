@@ -111,7 +111,7 @@ export const Logic = (props) => {
   })
 
   const [namePostFetch, setNamePostFetch] = useState({
-    img: "empty.png",
+    img: "../logo.png",
     nameWeather: "",
     temperature: 'Жми "Узнать погоду!"',
   })

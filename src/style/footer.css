@@ -2,12 +2,9 @@
   margin: var(--margin-section);
 }
 
-.footer-inner {
-  margin: var(--margin-section);
-}
-
 .footer__text {
+  display: flex;
+  align-items: center;
   padding: var(--padding-text-div);
   text-align: center;
-  width: 100%;
 }

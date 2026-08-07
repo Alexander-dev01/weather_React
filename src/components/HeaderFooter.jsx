@@ -22,7 +22,14 @@ const HeaderFooter = (props) => {
           </div>
         )}
 
-        {hasFooter && <div className="footer__text">Это подвал)</div>}
+        {hasFooter && (
+          <>
+            <div className="footer__text">Автор сайта: Александр</div>
+            <div className="footer__text">
+              <a href="https://github.com/Alexander-dev01" className="link">Мой GitHub</a>
+            </div>
+          </>
+        )}
       </div>
     </>
   )
